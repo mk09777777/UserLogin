@@ -13,7 +13,7 @@ export default function Details() {
     const [date, setDate] = useState(new Date());
     const [selectedGender, setSelectedGender] = useState(null);
     const [selectedDietary, setSelectedDietary] = useState([]);
-    const [selectedAlergies, setSelectedAlergies] = useState([]);
+    const [selectedAllergies, setSelectedAllergies] = useState([]);
     const navigation = useNavigation();
 
     const genderOptions = [
@@ -22,21 +22,21 @@ export default function Details() {
         { name: "other", src: require("../assests/gender.png"), id: 3 },
         { name: "not to say", src: require("../assests/gender.png"), id: 4 },
     ];
-    
+
     const dietaryOptions = [
         { name: "vegan", src: require("../assests/vegan.png"), id: 1 },
         { name: "vegetarian", src: require("../assests/veg.png"), id: 2 },
         { name: "keto", src: require("../assests/keto.png"), id: 3 },
         { name: "Halal", src: require("../assests/fish.png"), id: 4 },
     ];
-    
-    const alergiesOptions = [
+
+    const allergiesOptions = [
         { name: "peanuts", src: require("../assests/peanut.png"), id: 1 },
         { name: "dairy", src: require("../assests/milk.png"), id: 2 },
-        { name: "vegies", src: require("../assests/gluten.png"), id: 3 },
+        { name: "veggies", src: require("../assests/gluten.png"), id: 3 },
         { name: "eggs", src: require("../assests/egg.png"), id: 4 },
     ];
-    
+
     const raceOptions = [
         { label: "Select your race", value: "" },
         { label: "Hindu", value: "Hindu" },
@@ -44,7 +44,7 @@ export default function Details() {
         { label: "Asian", value: "Asian" },
         { label: "Other", value: "Other" },
     ];
-    
+
     const showDatePicker = () => {
         DateTimePickerAndroid.open({
             value: date,
@@ -55,11 +55,11 @@ export default function Details() {
             },
         });
     };
-    
+
     const toggleSelection = (item, selectedItems, setSelectedItems) => {
         setSelectedItems(prev => prev.includes(item) ? prev.filter(i => i !== item) : [...prev, item]);
     };
-    
+
     const submitData = async () => {
         const user = auth.currentUser;
         if (!user) {
@@ -73,19 +73,19 @@ export default function Details() {
                 gender: selectedGender,
                 birthDate: date.toDateString(),
                 dietaryPreferences: selectedDietary,
-                allergies: selectedAlergies,
+                allergies: selectedAllergies,
             });
             setDate(new Date());
             setRace(null);
             setSelectedGender(null);
-            setSelectedAlergies([]);
+            setSelectedAllergies([]);
             setSelectedDietary([]);
             navigation.navigate("card");
         } catch (error) {
             Alert.alert("Error", error.message);
         }
     };
-    
+
     return (
         <Fragment>
             <ScrollView style={Detailstyles.background}>
@@ -121,8 +121,6 @@ export default function Details() {
                     <TextInput style={Detailstyles.date} value={date.toDateString()} editable={false} />
                 </TouchableOpacity>
                 <Text style={Detailstyles.H2}>Dietary Preferences</Text>
-                <Text style={Detailstyles.P12}>help us understand your food choices</Text>
-                <Text style={Detailstyles.P22}>Select your dietary prefrences</Text>
                 <FlatList
                     data={dietaryOptions}
                     keyExtractor={(item) => item.id.toString()}
@@ -136,14 +134,14 @@ export default function Details() {
                         </TouchableOpacity>
                     )}
                 />
-                    <Text style={Detailstyles.P22}>Select your allergies</Text>
+                <Text style={Detailstyles.P22}>Select your allergies</Text>
                 <FlatList
-                    data={alergiesOptions}
+                    data={allergiesOptions}
                     keyExtractor={(item) => item.id.toString()}
                     numColumns={2}
                     renderItem={({ item }) => (
-                        <TouchableOpacity onPress={() => toggleSelection(item.name, selectedDietary, setSelectedDietary)}>
-                            <View style={selectedDietary.includes(item.name) ? Detailstyles.genderselect2 : Detailstyles.genderselect}>
+                        <TouchableOpacity onPress={() => toggleSelection(item.name, selectedAllergies, setSelectedAllergies)}>
+                            <View style={selectedAllergies.includes(item.name) ? Detailstyles.genderselect2 : Detailstyles.genderselect}>
                                 <Image style={Detailstyles.genderimg} source={item.src} />
                                 <Text style={Detailstyles.gendertext}>{item.name}</Text>
                             </View>
