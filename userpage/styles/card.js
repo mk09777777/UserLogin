@@ -142,14 +142,18 @@ const Cardstyles = ScaledSheet.create({
         marginTop:"34@vs",
         height:"38@vs",
         width:"270@s",
-        borderRadius:"20@ms",
+        borderRadius:"13@ms",
         backgroundColor:"rgb(124, 185, 151)",
         display:"flex",
         flexDirection:"row",
-     
-         marginLeft: "33@s"
-        
-    },
+        marginLeft: "33@s",
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5
+    }
+    ,
     outLogo:{
         height:"28@s",
         width:"28@s",
